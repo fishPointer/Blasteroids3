@@ -6,7 +6,7 @@ var player_scene: PackedScene = preload("res://scenes/player.tscn")
 var window_x: int = 1366
 var window_y: int = 768
 var rand_band: int = 200
-var skullcount: int = 1
+var skullcount: int = 2
 var score: int = 1
 
 func create_laser(pos, dir):
