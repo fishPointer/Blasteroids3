@@ -1,0 +1,143 @@
+[gd_scene load_steps=9 format=3 uid="uid://b7ynsc7fprkwl"]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_eungi"]
+[ext_resource type="Texture2D" uid="uid://jdop7tx2kyj0" path="res://resources/sakura_bg.jpg" id="1_j8edk"]
+[ext_resource type="PackedScene" uid="uid://bthi608hd2pe4" path="res://scenes/player.tscn" id="2_udl4m"]
+[ext_resource type="PackedScene" uid="uid://due4onto0fys6" path="res://scenes/skull.tscn" id="4_3xd4d"]
+[ext_resource type="LabelSettings" uid="uid://bqxth1vcty5o2" path="res://scenes/scorecard.tres" id="5_6kfwm"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_rt8oi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v1laf"]
+size = Vector2(167, 978)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0t1c3"]
+size = Vector2(1382, 134)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_eungi")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -2
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_j8edk")
+
+[node name="Control" type="Control" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="TextureRect/Control"]
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect/Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -683.0
+offset_top = -384.0
+offset_right = -643.0
+offset_bottom = -344.0
+scale = Vector2(34.24, 19.4)
+texture = SubResource("CanvasTexture_rt8oi")
+
+[node name="Button" type="Button" parent="TextureRect/Control"]
+z_index = 4
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.5
+offset_top = -15.5
+offset_right = 54.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLAY AGAIN?"
+
+[node name="Player" parent="." instance=ExtResource("2_udl4m")]
+z_index = 2
+position = Vector2(661, 413)
+
+[node name="InvisibleWalls" type="Node2D" parent="."]
+
+[node name="Area2D" type="StaticBody2D" parent="InvisibleWalls"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls/Area2D"]
+position = Vector2(-72, 358)
+shape = SubResource("RectangleShape2D_v1laf")
+
+[node name="Area2D2" type="StaticBody2D" parent="InvisibleWalls"]
+collision_layer = 4
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="InvisibleWalls/Area2D2"]
+position = Vector2(1439, 361)
+shape = SubResource("RectangleShape2D_v1laf")
+
+[node name="Area2D3" type="StaticBody2D" parent="InvisibleWalls"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls/Area2D3"]
+position = Vector2(681, -62)
+shape = SubResource("RectangleShape2D_0t1c3")
+
+[node name="Area2D4" type="StaticBody2D" parent="InvisibleWalls"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls/Area2D4"]
+position = Vector2(674, 824)
+shape = SubResource("RectangleShape2D_0t1c3")
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Skull" parent="Enemies" instance=ExtResource("4_3xd4d")]
+position = Vector2(-285, 634)
+collision_mask = 9
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 34.0
+offset_top = 666.0
+offset_right = 34.0
+offset_bottom = 666.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "ACTIVE"
+label_settings = ExtResource("5_6kfwm")
+
+[node name="Count" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("5_6kfwm")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "SCORE: "
+label_settings = ExtResource("5_6kfwm")
+
+[node name="Score" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+label_settings = ExtResource("5_6kfwm")
+
+[connection signal="pressed" from="TextureRect/Control/Button" to="." method="_on_button_pressed"]
